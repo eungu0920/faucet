@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./SafeERC20.sol";
+import "./utils/SafeERC20.sol";
 
 contract owned {
     address public owner;
