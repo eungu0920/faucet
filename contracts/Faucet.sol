@@ -76,26 +76,22 @@ contract Faucet is owned {
             payable(owner).transfer(address(this).balance);
         }
 
-        if (TON.balanceOf(address(this)) > 0) {
-            TON.safeTransfer(msg.sender, TON.balanceOf(address(this)));
-        }
-
-        if (TOS.balanceOf(address(this)) > 0) {
-            TOS.safeTransfer(msg.sender, TOS.balanceOf(address(this)));
-        }
-
-        if (USDT.balanceOf(address(this)) > 0) {
-            USDT.safeTransfer(msg.sender, USDT.balanceOf(address(this)));
-        }
-
-        if (USDC.balanceOf(address(this)) > 0) {
-            USDC.safeTransfer(msg.sender, USDC.balanceOf(address(this)));
-        }
+        _withdrawToken(TON);
+        _withdrawToken(TOS);
+        _withdrawToken(USDT);
+        _withdrawToken(USDC);
     }
 
     function transferOwnership(address newOwner) public onlyOwner {
         require(newOwner != address(0), "New owner is the zero address");
         owner = newOwner;
+    }
+
+    function _withdrawToken(IERC20 token) internal {
+        uint256 balance = token.balanceOf(address(this));
+        if (balance > 0) {
+            token.safeTransfer(msg.sender, balance);
+        }
     }
 
     receive() external payable {
