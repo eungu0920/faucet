@@ -1,26 +1,12 @@
 // SPDX-License-Identifier: GPL-3.0
 pragma solidity ^0.8.20;
 
-import "./utils/SafeERC20.sol";
-
-/// @title Owned Contract
-/// @notice This contract sets the deployer as the owner
-contract owned {
-    address public owner;
-
-    constructor() {
-        owner = msg.sender;
-    }
-
-    modifier onlyOwner {
-        require(msg.sender == owner, "Sender is not a owner");
-        _;
-    }
-}
+import "@openzepplin/contracts/access/Ownable.sol";
+import "@openzepplin/contracts/token/ERC20/utils/SafeERC20.sol";
 
 /// @title Faucet Contract
 /// @notice This contract allows users to request tokens with a time limit
-contract Faucet is owned {
+contract Faucet is Ownable {
     using SafeERC20 for IERC20;
     uint256 public timeLimit;
     uint256 public withdrawalAmount;
