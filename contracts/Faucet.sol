@@ -114,6 +114,6 @@ contract Faucet is owned {
 
     /// @notice Fallback function to handle Ether deposits
     receive() external payable {
-        emit Deposit(msg.sender, msg.value);
+        revert("Ether deposits not allowed");
     }
 }
